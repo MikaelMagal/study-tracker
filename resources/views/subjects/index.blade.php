@@ -1,16 +1,22 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<div class="container mt-5">
-    <h1>Subjects</h1>
+@extends('layouts.app')
 
-    <form method="POST" action="/subjects">
-        @csrf
-        <input type="text" name="name" placeholder="Subject name">
-        <button type="submit">Create</button>
-    </form>
+@section('content')
+<h2>Subjects</h2>
 
-    <ul>
-        @foreach($subjects as $subject)
-            <li>{{ $subject->name }}</li>
-        @endforeach
-    </ul>
-</div>
+<form method="POST" action="/subjects" class="mb-4">
+    @csrf
+
+    <div class="input-group">
+        <input type="text" name="name" class="form-control" placeholder="Subject name">
+        <button class="btn btn-primary">Create</button>
+    </div>
+</form>
+
+<ul class="list-group">
+    @foreach($subjects as $subject)
+        <li class="list-group-item">
+            {{ $subject->name }}
+        </li>
+    @endforeach
+</ul>
+@endsection

@@ -1,33 +1,36 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<div class="container mt-5">
-    <h1>Study Sessions</h1>
+@extends('layouts.app')
 
-    <form method="POST" action="/sessions">
-        @csrf
+@section('content')
+<h2>Study Sessions</h2>
 
-        <select name="subject_id">
-            @foreach($subjects as $subject)
-                <option value="{{ $subject->id }}">
-                    {{ $subject->name }}
-                </option>
-            @endforeach
-        </select>
+<form method="POST" action="/sessions" class="mb-4">
+    @csrf
 
-        <input type="date" name="study_date">
-        <input type="number" name="duration_minutes" placeholder="Minutes">
-        <input type="number" name="difficulty_level" min="1" max="5" placeholder="Difficulty">
-        <input type="text" name="notes" placeholder="Notes">
-
-        <button type="submit">Save session</button>
-    </form>
-
-    <ul>
-        @foreach($sessions as $session)
-            <li>
-                {{ $session->subject->name }} -
-                {{ $session->duration_minutes }} min -
-                Difficulty: {{ $session->difficulty_level }}
-            </li>
+    <select name="subject_id" class="form-select mb-2">
+        @foreach($subjects as $subject)
+            <option value="{{ $subject->id }}">
+                {{ $subject->name }}
+            </option>
         @endforeach
-    </ul>
-</div>
+    </select>
+
+    <input type="date" name="study_date" class="form-control mb-2">
+    <input type="number" name="duration_minutes" class="form-control mb-2" placeholder="Minutes">
+    <input type="number" name="difficulty_level" class="form-control mb-2" placeholder="Difficulty">
+    <input type="text" name="notes" class="form-control mb-2" placeholder="Notes">
+
+    <button class="btn btn-success">Save session</button>
+</form>
+
+<ul class="list-group">
+    @foreach($sessions as $session)
+        <li class="list-group-item">
+            <strong>{{ $session->subject->name }}</strong> -
+            {{ $session->duration_minutes }} min -
+            Difficulty: {{ $session->difficulty_level }} -
+            Date: {{ $session->study_date }}<br>
+            {{ $session->notes }}
+        </li>
+    @endforeach
+</ul>
+@endsection
